@@ -45,7 +45,7 @@ class VoiceDetectionResponse(BaseModel):
 @app.post("/api/voice-detection", response_model=VoiceDetectionResponse)
 def detect_voice(
     request: VoiceDetectionRequest,
-    x_api_key: str = Header(None),
+    x_api_key: str = Header(None, alias="x-api-key"),
     authorization: str = Header(None)
 ):
     # API key validation

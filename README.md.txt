@@ -1,1 +1,0 @@
-# AI Generated Voice Detection
