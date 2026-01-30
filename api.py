@@ -2,6 +2,7 @@ from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import base64
 import requests
+import os
 
 # Checking API status
 """
@@ -12,7 +13,7 @@ def predict():
 """
 
 app = FastAPI()
-API_KEY = "sk_test_123456789"  # to be changed later
+API_KEY = "sk_test_123456789"  # to be changed later- os.getenv("API_KEY")
 
 languages = {
     "Tamil",
@@ -24,7 +25,7 @@ languages = {
 
 #Request
 class VoiceDetectionRequest(BaseModel):
-    language: str
+    language: str | None = None
     audioFormat: str
     audioBase64: str | None = None
     audioUrl: str | None = None  # for MP3 URL
@@ -64,7 +65,7 @@ def detect_voice(
         )
 
     # language validation
-    if request.language not in languages:
+    if request.language and request.language not in languages:
         raise HTTPException(
             status_code=400,
             detail="Unsupported language"
